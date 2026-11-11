@@ -7,11 +7,14 @@
 <style>
 @font-face{font-family:'DOSGothic';src:url(fonts/DOSGothic.woff) format('woff');font-display:swap}
 @font-face{font-family:'DOSIyagi';src:url(fonts/DOSIyagiBoldface.woff) format('woff');font-display:swap}
-:root{--blue:#5f8aa6;--orange:#e08a3c;--line:#9db0bd;--txt:#444;--soft:#eef3f6}
+:root{--blue:#5f8aa6;--orange:#e08a3c;--line:#a0b9ca;--txt:#444;--soft:#eef3f6;--bg:#e9e9eb;--grid:#d8d8dc;--cover:#ffffff;--cover-d:#d1d1d1;--stitch:#e0e0e0;--ctitle:#527590}
 *{box-sizing:border-box}
 html{font-synthesis:none}
 body{margin:0;font-family:'DOSGothic','Malgun Gothic','Apple SD Gothic Neo',sans-serif;color:var(--txt);font-size:16px;line-height:1.35;-webkit-font-smoothing:none;
- background-color:#e9e9eb;background-image:linear-gradient(#d8d8dc 1px,transparent 1px),linear-gradient(90deg,#d8d8dc 1px,transparent 1px);background-size:22px 22px;min-height:100vh}
+ background-color:var(--bg);min-height:100vh}
+body.pat-grid{background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:22px 22px}
+body.pat-dots{background-image:radial-gradient(var(--grid) 2px,transparent 2.6px);background-size:22px 22px}
+input[type=color]{width:38px;height:28px;padding:0;border:1px solid var(--line);vertical-align:middle;background:#fff;cursor:pointer}
 .hd{font-family:'DOSIyagi','DOSGothic',sans-serif;font-weight:400}
 button{font-family:inherit;cursor:pointer}
 input,textarea,select{font-family:inherit;font-size:16px;color:var(--txt)}
@@ -36,9 +39,11 @@ small{font-size:16px;color:#999}
 .ptitle{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
 .pbtn{border:1px solid #bbb;background:#fff;border-radius:3px;padding:0 8px}
 /* book */
-.book{position:relative;background:#fff;border:2px solid var(--line);border-radius:20px;padding:16px;display:grid;grid-template-columns:204px 1fr 92px;gap:16px;box-shadow:0 4px 0 #c9d4db}
-.ring{position:absolute;left:206px;width:34px;height:12px;border:2px solid var(--line);border-radius:8px;background:#fff;z-index:2}
-.title{grid-column:1/4;margin:0;color:#6a7f8d;font-size:32px;font-weight:400;padding:0 4px;line-height:1.1}
+.book{position:relative;background:var(--cover);border:3px solid var(--cover-d);border-radius:22px;padding:22px 20px 20px;display:grid;grid-template-columns:204px 1fr 92px;gap:20px;box-shadow:0 5px 0 var(--cover-d)}
+.book::before{content:'';position:absolute;inset:7px;border:2px dashed var(--stitch);border-radius:16px;pointer-events:none}
+.counter{grid-column:1/4;display:flex;justify-content:flex-start;color:var(--ctitle);letter-spacing:1px;margin-bottom:-14px;padding:0 4px}
+.ring{position:absolute;left:217px;width:34px;height:12px;border:2px solid #9aa7af;border-radius:8px;background:#f4f6f7;z-index:2}
+.title{grid-column:1/4;margin:0;color:var(--ctitle);font-size:32px;font-weight:400;padding:0 4px;line-height:1.1}
 .left,.main{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff;min-height:540px}
 .main{min-width:0}
 .left .pic{border:1px solid var(--line);border-radius:6px;background:linear-gradient(#e8f0f6,#f8f1ea);padding:6px 20px 0}
@@ -51,8 +56,8 @@ small{font-size:16px;color:#999}
 .stat{display:flex;justify-content:space-between;border-top:1px dotted var(--line);margin-top:10px;padding-top:8px}
 .stat b{color:var(--orange);font-weight:400}
 .dbig{margin:10px 0;text-align:center;background:var(--soft);border-radius:10px;padding:6px;color:var(--blue);font-size:32px;line-height:1.1}
-.tabs{display:flex;flex-direction:column;gap:5px;margin-top:40px}
-.tab{background:#8d9aa3;color:#fff;border:0;border-radius:0 10px 10px 0;padding:8px 2px;margin-right:-18px;text-align:center}
+.tabs{display:flex;flex-direction:column;gap:5px;margin-top:40px;position:relative;z-index:3}
+.tab{background:var(--blue);color:#fff;border:0;border-radius:0 10px 10px 0;padding:8px 2px;margin-right:-18px;text-align:center}
 .tab.on{background:#fff;color:#333;border:2px solid var(--line);border-left:0}
 h3.sec{color:var(--blue);margin:0 0 10px;border-bottom:2px solid var(--blue);padding-bottom:4px;font-size:16px}
 .bl{color:var(--blue)}
@@ -70,11 +75,10 @@ ul.rec li::before{content:'';position:absolute;left:0;top:11px;width:5px;height:
 .td{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px dotted #ccc}
 .td.d{color:#aaa;text-decoration:line-through}
 /* room */
-.room{container-type:inline-size;position:relative;aspect-ratio:16/10;overflow:hidden;border:1px solid var(--line);border-radius:6px;background:#fff;touch-action:manipulation}
-.room .wall{position:absolute;inset:0}
-.room .floor{position:absolute;left:0;right:0;bottom:0;height:50%;border-top:3px solid rgba(255,255,255,.8)}
-.ritem{position:absolute;transform:translate(-50%,-50%);font-size:9cqw;line-height:1;user-select:none}
-.rchar{position:absolute;transform:translate(-50%,-92%);width:21cqw}.rchar svg{width:100%;display:block}
+.room{container-type:inline-size;position:relative;aspect-ratio:16/10;overflow:hidden;border:1px solid var(--line);border-radius:6px;background:#f1f4f6;touch-action:manipulation}
+.room svg.rs{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ritem{position:absolute;transform:translate(-50%,-60%);font-size:8cqw;line-height:1;user-select:none}
+.rchar{position:absolute;transform:translate(-50%,-96%);width:15cqw}.rchar svg{width:100%;display:block}
 .room.edit .ritem,.room.edit .rchar{cursor:grab;touch-action:none;outline:1px dashed rgba(95,138,166,.6)}
 .rm{position:absolute;top:-4px;right:-8px;background:#e55;color:#fff;border-radius:50%;width:5cqw;height:5cqw;font-size:3.6cqw;line-height:5cqw;text-align:center;font-style:normal}
 .bubble{position:absolute;transform:translate(-50%,-100%);background:#fff;border:1px solid #888;border-radius:4px;padding:1px 8px;white-space:nowrap;font-size:16px;z-index:200}
@@ -130,12 +134,12 @@ input.f,textarea.f{width:100%;padding:8px;border:1px solid var(--line);border-ra
  .book{grid-template-columns:1fr}.title{grid-column:1}.ring{display:none}
  .left{min-height:0}.tabs{flex-direction:row;flex-wrap:wrap;margin:0;order:-1;grid-column:1}
  .tab{border-radius:10px;margin:0;flex:1;min-width:76px}.tab.on{border:2px solid var(--line)}
- .pl,.two,.top2{grid-template-columns:1fr}
+ .pl,.two,.top2{grid-template-columns:1fr}.counter{grid-column:1}
  .cd{min-height:56px}
 }
 </style>
 </head>
-<body>
+<body class="pat-grid">
 
 <div id="login">
   <h1 class="hd">🌰 도토리 미니홈피</h1>
@@ -158,6 +162,7 @@ input.f,textarea.f{width:100%;padding:8px;border:1px solid var(--line);border-ra
   <div class="book">
     <div class="ring" style="top:90px"></div><div class="ring" style="top:150px"></div>
     <div class="ring" style="bottom:150px"></div><div class="ring" style="bottom:90px"></div>
+    <div class="counter hd" id="counter"></div>
     <h2 class="title hd" id="bookTitle">미니홈피</h2>
     <div class="left" id="left"></div>
     <div class="main" id="content"></div>
@@ -231,15 +236,16 @@ const ITEMS = [
  {id:'cat',e:'🐈',p:14,n:'고양이'},{id:'sq',e:'🐿️',p:15,n:'다람쥐'},{id:'tree',e:'🌳',p:7,n:'나무'}
 ];
 const WALLS = [
- {id:'mint',n:'민트',c:'#dfeee9',p:0},{id:'sky',n:'하늘',c:'#dce9f5',p:0},{id:'pink',n:'핑크',c:'#f8e1e6',p:5},
- {id:'lemon',n:'레몬',c:'#fbf1c9',p:5},{id:'lav',n:'라벤더',c:'#e6e0f5',p:8}
+ {id:'mint',n:'민트',c:'#cfe6dc',p:0,pat:'stripe'},{id:'sky',n:'하늘',c:'#cfe0f2',p:0,pat:''},{id:'pink',n:'핑크',c:'#f6d5dd',p:5,pat:'dots'},
+ {id:'lemon',n:'레몬',c:'#f8ecb8',p:5,pat:'stripe'},{id:'lav',n:'라벤더',c:'#ddd5f2',p:8,pat:'dots'}
 ];
 const FLOORS = [
- {id:'check',n:'체크',p:0,css:'repeating-conic-gradient(#fff 0 25%,#e6ecf0 0 50%) 0 0/8cqw 8cqw'},
- {id:'wood',n:'우드',p:5,css:'repeating-linear-gradient(90deg,#e8c9a0 0 7cqw,#dcb98c 7cqw 7.4cqw)'},
- {id:'grass',n:'잔디',p:6,css:'radial-gradient(#b9dca9 18%,transparent 20%) 0 0/4cqw 4cqw,#d3ebc6'},
- {id:'tile',n:'핑크타일',p:6,css:'repeating-conic-gradient(#fde9ee 0 25%,#f7d3dc 0 50%) 0 0/10cqw 10cqw'}
+ {id:'check',n:'체크',p:0,t:'check',a:'#ffffff',b:'#dfe6ec'},
+ {id:'wood',n:'우드',p:5,t:'wood',a:'#e8c9a0',b:'#d2a877'},
+ {id:'grass',n:'잔디',p:6,t:'grass',a:'#d3ebc6',b:'#a9d495'},
+ {id:'tile',n:'핑크타일',p:6,t:'check',a:'#fde9ee',b:'#f5c9d5'}
 ];
+const swCSS = f => f.t === 'wood' ? `repeating-linear-gradient(90deg,${f.a} 0 6px,${f.b} 6px 8px)` : f.t === 'grass' ? `radial-gradient(${f.b} 20%,transparent 22%) 0 0/8px 8px,${f.a}` : `repeating-conic-gradient(${f.a} 0 25%,${f.b} 0 50%) 0 0/12px 12px`;
 const MOODS = ['😊 기분 좋음','📚 열공 중','😴 졸려요','😭 시험 무서워','🍀 파이팅','🍙 배고픔','🎧 노래 듣는 중'];
 
 /* ================= 픽셀 캐릭터 ================= */
@@ -415,8 +421,31 @@ function charSVG(raw){
 /* ================= 상태 ================= */
 let me = null, profile = null, record = null, tab = 'home', planDate = todayS(), calMonth = new Date(2026, 10, 1);
 let visiting = null;
-const defProfile = id => ({ name:id, msg:'오늘도 화이팅! 🌰', mood:MOODS[1], char:normChar({}), fl:[],
-  bgm:{url:'',title:''}, room:{wall:'mint',floor:'check',items:[],cx:50,cy:88} });
+const THEMES = [
+ ['기본',{bg:'#e9e9eb',cover:'#ffffff',accent:'#5f8aa6'}],
+ ['하늘',{bg:'#dfeaf3',cover:'#5fb3dc',accent:'#3f8fc4'}],
+ ['핑크',{bg:'#fbe9ee',cover:'#f7b6c8',accent:'#d9728f'}],
+ ['민트',{bg:'#e4f2ec',cover:'#9fd8c0',accent:'#3f9f7f'}],
+ ['라벤더',{bg:'#ece8f7',cover:'#c4b5ee',accent:'#7d68c8'}],
+ ['레몬',{bg:'#fbf5d9',cover:'#f6dc7a',accent:'#c99a1e'}]
+];
+const PATS = [['grid','격자'],['dots','물방울'],['none','없음']];
+function normTheme(t){
+  t = t || {}; const d = THEMES[0][1], h = (v, k) => isHex(v) ? v.toLowerCase() : d[k];
+  return { bg: h(t.bg, 'bg'), cover: h(t.cover, 'cover'), accent: h(t.accent, 'accent'), pat: inList(t.pat, PATS) ? t.pat : 'grid' };
+}
+const lum = c => { const [r, g, b] = hx(c); return (.299 * r + .587 * g + .114 * b) / 255; };
+function applyTheme(raw){
+  const t = normTheme(raw), s = document.documentElement.style, dk = lum(t.cover) < .75;
+  s.setProperty('--bg', t.bg); s.setProperty('--grid', darken(t.bg, .07));
+  s.setProperty('--cover', t.cover); s.setProperty('--cover-d', darken(t.cover, .18));
+  s.setProperty('--stitch', dk ? lighten(t.cover, .6) : darken(t.cover, .1));
+  s.setProperty('--ctitle', dk ? '#ffffff' : darken(t.accent, .1));
+  s.setProperty('--blue', t.accent); s.setProperty('--line', mix(t.accent, '#ffffff', .45)); s.setProperty('--soft', mix(t.accent, '#ffffff', .9));
+  document.body.className = 'pat-' + t.pat;
+}
+const defProfile = id => ({ name:id, msg:'오늘도 화이팅! 🌰', mood:MOODS[1], char:normChar({}), fl:[], theme:normTheme({}),
+  bgm:{url:'',title:''}, room:{wall:'mint',floor:'check',items:[],cx:50,cy:70} });
 const defRecord = () => ({ acorns:0, owned:[], plans:{}, friends:[] });
 
 let tR, tP;
@@ -482,7 +511,7 @@ $('#lpin').onkeydown = e => { if (e.key === 'Enter') auth(false); };
 async function enter(id){
   me = id;
   profile = Object.assign(defProfile(id), await DB.get('profile', id) || {});
-  profile.char = normChar(profile.char);
+  profile.char = normChar(profile.char); profile.theme = normTheme(profile.theme);
   record = Object.assign(defRecord(), await DB.get('record', id) || {});
   if (JSON.stringify(profile.fl || []) !== JSON.stringify(record.friends)) { profile.fl = record.friends.slice(); saveProfile(); }
   $('#login').classList.add('hidden'); $('#app').classList.remove('hidden');
@@ -504,6 +533,10 @@ function go(t, arg){
 }
 function renderShell(){
   const p = visiting?.profile || profile;
+  applyTheme(p.theme);
+  let tot = 0, tdn = 0;
+  if (!visiting) { for (const pl of Object.values(record.plans)) pl.tasks.forEach(t => { if (t.done) tot++; }); const tp = record.plans[todayS()]; tdn = tp ? tp.tasks.filter(t => t.done).length : 0; }
+  $('#counter').innerHTML = visiting ? '&nbsp;' : `<span>TODAY <span style="color:var(--orange)">${tdn}</span> | TOTAL ${tot}</span>`;
   $('#bookTitle').textContent = `${p.name}님의 미니홈피 ☆`;
   $('#left').innerHTML = `<div class="pic">${charSVG(p.char)}</div>
     <div class="mood"><i>TODAY IS..</i>${visiting ? `<span>${esc(p.mood)}</span>` : `<select id="moodSel">${MOODS.map(m => `<option ${m === p.mood ? 'selected' : ''}>${m}</option>`).join('')}</select>`}</div>
@@ -525,23 +558,61 @@ function refreshSide(){
   $('#sFr').textContent = record.friends.length;
   const a = document.querySelector('.left .stat b'); if (a) a.textContent = '🌰 ' + record.acorns;
 }
+const HEX = [[12,34],[80,0],[148,34],[148,62],[80,96],[12,62]];
+const inPoly = (x, y, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if (((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi)) c = !c; } return c; };
+function clampItem(x, y){
+  const X = x * 1.6; if (inPoly(X, y, HEX)) return [x, y];
+  for (let k = 1; k <= 40; k++) { const t = 1 - k * .025, xx = 80 + (X - 80) * t, yy = 48 + (y - 48) * t; if (inPoly(xx, yy, HEX)) return [xx / 1.6, yy]; }
+  return [50, 62];
+}
+function clampChar(x, y){
+  const dx = (x - 50) / 37, dy = (y - 62) / 29, s = Math.abs(dx) + Math.abs(dy);
+  return s <= 1 ? [x, y] : [50 + (x - 50) / s, 62 + (y - 62) / s];
+}
+function floorInner(f){
+  let s = `<rect width="1" height="1" fill="${f.a}"/>`;
+  if (f.t === 'check') { for (let i = 0; i < 8; i++) for (let j = 0; j < 8; j++) if ((i + j) % 2) s += `<rect x="${i / 8}" y="${j / 8}" width=".125" height=".125" fill="${f.b}"/>`; }
+  else if (f.t === 'wood') { for (let i = 1; i < 10; i++) s += `<rect x="${i / 10 - .004}" width=".008" height="1" fill="${f.b}"/>`; }
+  else if (f.t === 'grass') { for (let k = 0; k < 70; k++) s += `<rect x="${((k * 37) % 97) / 100}" y="${((k * 61) % 97) / 100}" width=".025" height=".025" fill="${f.b}"/>`; }
+  return s;
+}
+let roomSeq = 0;
 function roomHTML(p, edit){
-  const r = p.room, w = WALLS.find(x => x.id === r.wall) || WALLS[0], f = FLOORS.find(x => x.id === r.floor) || FLOORS[0];
-  const items = (Array.isArray(r.items) ? r.items : []).map(it => ({ uid: esc(it.uid), id: it.id, x: +it.x || 50, y: +it.y || 55 }));
-  return `<div class="room ${edit ? 'edit' : ''}" id="room"><div class="wall" style="background:${w.c}"></div><div class="floor" style="background:${f.css}"></div>
+  const r = p.room, w = WALLS.find(x => x.id === r.wall) || WALLS[0], f = FLOORS.find(x => x.id === r.floor) || FLOORS[0], u = 'rm' + (++roomSeq);
+  const wl = darken(w.c, .05), wr = lighten(w.c, .22), bb = darken(w.c, .22);
+  const LW = '12,62 80,28 80,0 12,34', RW = '80,28 148,62 148,34 80,0';
+  const svg = `<svg class="rs" viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg">
+   <defs><pattern id="${u}s" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="1.6" height="5" fill="#fff" opacity=".38"/></pattern>
+   <pattern id="${u}d" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="3.5" cy="3.5" r="1.2" fill="#fff" opacity=".65"/></pattern></defs>
+   <polygon points="${LW}" fill="${wl}"/><polygon points="${RW}" fill="${wr}"/>
+   ${w.pat ? `<polygon points="${LW}" fill="url(#${u}${w.pat === 'dots' ? 'd' : 's'})"/><polygon points="${RW}" fill="url(#${u}${w.pat === 'dots' ? 'd' : 's'})"/>` : ''}
+   <polygon points="100,18 130,33 130,45 100,30" fill="#d6ecfa" stroke="#fff" stroke-width="1.6"/><line x1="115" y1="25.5" x2="115" y2="37.5" stroke="#fff" stroke-width="1"/><line x1="100" y1="24" x2="130" y2="39" stroke="#fff" stroke-width="1"/>
+   <polygon points="12,62 80,28 80,25 12,59" fill="${bb}" opacity=".55"/><polygon points="80,28 148,62 148,59 80,25" fill="${bb}" opacity=".45"/>
+   <line x1="80" y1="0" x2="80" y2="28" stroke="${darken(w.c, .15)}" stroke-width=".6"/>
+   <polygon points="12,62 80,96 80,100 12,66" fill="${darken(f.b, .22)}"/><polygon points="80,96 148,62 148,66 80,100" fill="${darken(f.b, .34)}"/>
+   <g transform="matrix(68 34 -68 34 80 28)">${floorInner(f)}</g></svg>`;
+  const items = (Array.isArray(r.items) ? r.items : []).map(it => { const [x, y] = clampItem(+it.x || 50, +it.y || 55); return { uid: esc(it.uid), id: it.id, x, y }; });
+  const [cx, cy] = clampChar(+r.cx || 50, +r.cy || 70);
+  const say = !edit && p.mood ? String(p.mood).replace(/^\S+\s/, '') : '';
+  return `<div class="room ${edit ? 'edit' : ''}" id="room">${svg}
   ${items.map(it => `<div class="ritem" data-uid="${it.uid}" style="left:${it.x}%;top:${it.y}%;z-index:${Math.round(it.y)}">${ITEMS.find(i => i.id === it.id)?.e || ''}${edit ? `<i class="rm" data-rm="${it.uid}">×</i>` : ''}</div>`).join('')}
-  <div class="rchar" style="left:${+r.cx || 50}%;top:${+r.cy || 88}%;z-index:${Math.round(+r.cy || 88)}">${charSVG(p.char)}</div></div>`;
+  <div class="rchar" style="left:${cx}%;top:${cy}%;z-index:${Math.round(cy)}">${charSVG(p.char)}</div>
+  ${say ? `<div class="bubble" style="left:${cx}%;top:${Math.max(cy - 37, 9)}%">${esc(say)}</div>` : ''}</div>`;
 }
 function enableDrag(){
   const room = $('#room'); let cur = null;
+  const pos = (e, b) => [(e.clientX - b.left) / b.width * 100, (e.clientY - b.top) / b.height * 100];
   room.addEventListener('pointerdown', e => {
     if (e.target.dataset.rm) { profile.room.items = profile.room.items.filter(i => i.uid !== e.target.dataset.rm); saveProfile(); decor(); return; }
     const el = e.target.closest('.ritem,.rchar'); if (!el) return;
-    cur = el; cur._x = null; el.setPointerCapture(e.pointerId); e.preventDefault();
+    const [px, py] = pos(e, room.getBoundingClientRect());
+    cur = el; cur._x = null; cur._ox = parseFloat(el.style.left) - px; cur._oy = parseFloat(el.style.top) - py;
+    el.setPointerCapture(e.pointerId); e.preventDefault();
   });
   room.addEventListener('pointermove', e => {
-    if (!cur) return; const b = room.getBoundingClientRect();
-    const x = Math.min(95, Math.max(5, (e.clientX - b.left) / b.width * 100)), y = Math.min(98, Math.max(20, (e.clientY - b.top) / b.height * 100));
+    if (!cur) return; const [px, py] = pos(e, room.getBoundingClientRect());
+    let x = px + cur._ox, y = py + cur._oy;
+    [x, y] = cur.classList.contains('rchar') ? clampChar(x, y) : clampItem(x, y);
     cur.style.left = x + '%'; cur.style.top = y + '%'; cur.style.zIndex = Math.round(y); cur._x = x; cur._y = y;
   });
   const end = () => {
@@ -757,7 +828,7 @@ function decor(){
   ${roomHTML(profile, true)}
   <div class="lbl">내 가방 (눌러서 방에 놓기)</div><div class="shop">${inv.map(i => `<div class="si" data-place="${i.id}" style="cursor:pointer"><div class="e">${i.e}</div>${i.n} ×${(have[i.id] || 0) - (placed[i.id] || 0)}</div>`).join('') || '<span style="color:#aaa">비어 있어요. 아래 상점에서 도토리로 사 보세요!</span>'}</div>
   <div class="lbl">벽지</div><div>${WALLS.map(w => `<span class="sw ${profile.room.wall === w.id ? 'on' : ''}" data-wall="${w.id}" style="background:${w.c}" title="${w.n} ${owns('wall:' + w.id, w.p) ? '' : '🌰' + w.p}">${owns('wall:' + w.id, w.p) ? '' : '🔒'}</span>`).join('')}</div>
-  <div class="lbl">바닥</div><div>${FLOORS.map(f => `<span class="sw ${profile.room.floor === f.id ? 'on' : ''}" data-floor="${f.id}" style="background:${f.css};background-size:cover" title="${f.n} ${owns('floor:' + f.id, f.p) ? '' : '🌰' + f.p}">${owns('floor:' + f.id, f.p) ? '' : '🔒'}</span>`).join('')}</div>
+  <div class="lbl">바닥</div><div>${FLOORS.map(f => `<span class="sw ${profile.room.floor === f.id ? 'on' : ''}" data-floor="${f.id}" style="background:${swCSS(f)}" title="${f.n} ${owns('floor:' + f.id, f.p) ? '' : '🌰' + f.p}">${owns('floor:' + f.id, f.p) ? '' : '🔒'}</span>`).join('')}</div>
   <h3 class="sec hd" style="margin-top:14px">도토리 상점</h3>
   <div class="shop">${ITEMS.map(i => `<div class="si"><div class="e">${i.e}</div>${i.n}<br><button class="btn o sm" data-buy="${i.id}">🌰 ${i.p}</button></div>`).join('')}</div>
   <p style="color:#888">🔒 벽지/바닥은 눌러서 도토리로 살 수 있어요 (가격은 마우스를 올리면 보여요)</p>`);
@@ -792,7 +863,7 @@ function friends(){
   };
 }
 function visit(v){
-  const p = v.profile; p.bgm = p.bgm || { url: '', title: '' }; p.room = Object.assign({ wall: 'mint', floor: 'check', items: [], cx: 50, cy: 88 }, p.room);
+  const p = v.profile; p.bgm = p.bgm || { url: '', title: '' }; p.room = Object.assign({ wall: 'mint', floor: 'check', items: [], cx: 50, cy: 70 }, p.room);
   C(`<h3 class="sec hd">${esc(p.name)}님의 방에 놀러 왔어요 🏠</h3>${roomHTML(p, false)}
   <div class="box" style="margin-top:10px"><div class="fl"><span>🎵 ${esc(p.bgm.title || (p.bgm.url ? '배경음악' : '노래 없음'))}</span>${p.bgm.url ? '<button class="btn sm" id="vb">이 노래 듣기</button>' : ''}</div>
   <div style="padding-top:6px">${esc(p.mood || '')} · ${esc(p.msg)}</div></div>
@@ -811,7 +882,7 @@ function visit(v){
 
 /* ================= 프로필 ================= */
 function prof(){
-  const c = profile.char;
+  const c = profile.char, th = profile.theme;
   const sw = (key, list) => list.map(v => `<span class="sw ${c[key] === v ? 'on' : ''}" data-k="${key}" data-v="${v}" style="background:${v}"></span>`).join('');
   const op = (key, list) => list.map(([v, n]) => `<button class="btn sm ${c[key] === v ? '' : 'g'}" data-k="${key}" data-v="${v}">${n}</button>`).join(' ');
   const tg = (key, label) => `<button class="btn sm ${c[key] ? '' : 'g'}" data-k="${key}" data-v="${c[key] ? '0' : '1'}">${label}</button>`;
@@ -823,10 +894,20 @@ function prof(){
   <div class="lbl">옷</div><div class="outf">${OUTFITS.map((o, i) => `<div class="${c.outfit === i ? 'on' : ''}" data-k="outfit" data-v="${i}" title="${o.n}">${charSVG({ ...c, outfit: i })}</div>`).join('')}</div>
   <div class="two"><div><div class="lbl">모자</div><div class="opts">${op('hat', HATS)}</div><div class="lbl">모자/머리띠 색</div>${sw('hatc', HATC)}</div>
   <div><div class="lbl">머리핀</div><div class="opts">${op('clip', CLIPS)}</div><div class="lbl">소품</div><div class="opts">${tg('glasses', c.glasses ? '안경 ON' : '안경 OFF')} ${tg('bear', c.bear ? '곰인형 ON' : '곰인형 OFF')}</div></div></div>
+  <h3 class="sec hd" style="margin-top:16px">페이지 색 꾸미기</h3>
+  <div class="lbl" style="margin-top:0">추천 색 조합</div>
+  <div class="opts">${THEMES.map(([n, t], i) => `<button class="btn sm g" data-tp="${i}" style="border-color:${t.accent}"><span style="display:inline-block;width:12px;height:12px;background:${t.cover};border:1px solid ${t.accent};vertical-align:-1px"></span> ${n}</button>`).join(' ')}</div>
+  <div class="lbl">직접 고르기</div>
+  <div class="opts"><label>표지 <input type="color" data-tc="cover" value="${th.cover}"></label> <label>배경 <input type="color" data-tc="bg" value="${th.bg}"></label> <label>포인트 <input type="color" data-tc="accent" value="${th.accent}"></label></div>
+  <div class="lbl">배경 무늬</div><div class="opts">${PATS.map(([v, n]) => `<button class="btn sm ${th.pat === v ? '' : 'g'}" data-tpat="${v}">${n}</button>`).join(' ')}</div>
   <div class="lbl">이름(별명)</div><input class="f" id="pn" maxlength="12" value="${esc(profile.name)}">
   <div class="lbl">한 줄 소개</div><textarea class="f" id="pm" maxlength="60" rows="2">${esc(profile.msg)}</textarea>
   <button class="btn" id="ps">저장</button>`);
+  $('#content').oninput = e => { const k = e.target.dataset.tc; if (!k) return; profile.theme[k] = e.target.value; applyTheme(profile.theme); saveProfile(); };
   $('#content').onclick = e => {
+    const tp = e.target.closest('[data-tp]'), pt = e.target.closest('[data-tpat]');
+    if (tp) { profile.theme = normTheme({ ...profile.theme, ...THEMES[+tp.dataset.tp][1] }); applyTheme(profile.theme); saveProfile(); prof(); renderShell(); return; }
+    if (pt) { profile.theme.pat = pt.dataset.tpat; applyTheme(profile.theme); saveProfile(); prof(); return; }
     const t = e.target.closest('[data-k]'); if (!t) return; const k = t.dataset.k, v = t.dataset.v;
     c[k] = k === 'outfit' ? +v : (k === 'glasses' || k === 'bear' || k === 'shut') ? v === '1' : v;
     profile.char = normChar(c); saveProfile(); prof(); renderShell();
